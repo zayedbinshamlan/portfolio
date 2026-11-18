@@ -1,753 +1,440 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl" class="l-ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zayed Bin Shamlan — Flutter Developer</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>زايد بن شملان | مهندس برمجيات</title>
+<meta name="description" content="زايد بن شملان، مهندس برمجيات (Mobile & Backend) في الرياض. Flutter وLaravel وPostgreSQL، و9 تطبيقات في بيئة الإنتاج.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@200;300;400;500&family=Noto+Kufi+Arabic:wght@300;400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --surface2: #16161f;
-    --accent: #6C63FF;
-    --accent2: #FF6B6B;
-    --accent3: #00D4AA;
-    --text: #f0f0f8;
-    --muted: #7a7a9a;
-    --border: rgba(108,99,255,0.15);
-    --card-bg: rgba(22,22,31,0.8);
-  }
+/* Layout idea: one quiet centered column framed by hairline guides; type and real app screenshots carry everything, no accent color. */
+:root{
+  --bg:#F7F7F6;
+  --paper:#FFFFFF;
+  --ink:#121212;
+  --soft:#8C8C8A;
+  --line:#E7E7E4;
+  --shadow:0 1px 2px rgba(0,0,0,.06),0 8px 24px -12px rgba(0,0,0,.18);
+  --calli:"Aref Ruqaa","IBM Plex Sans Arabic",serif;
+  --sans:"IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  --col:1080px;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.8;-webkit-font-smoothing:antialiased;overflow-x:clip}
+html{overflow-x:clip}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:8px}
+.l-ar .en{display:none!important}
+.l-en .ar{display:none!important}
+.ltr{direction:ltr;unicode-bidi:isolate}
+h1,h2,h3{font-weight:600;line-height:1.25;text-wrap:balance}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* frame: hairline guides like a drafting sheet */
+.frame{max-width:calc(var(--col) + 2px);margin-inline:auto;border-inline:1px solid var(--line);position:relative}
+.band{border-top:1px solid var(--line);position:relative}
+.band::before{content:"";position:absolute;left:50%;width:100vw;transform:translateX(-50%);top:-1px;border-top:1px solid var(--line);pointer-events:none}
+.pad{padding-inline:clamp(18px,4vw,44px)}
+@media (max-width:1120px){.frame{border-inline:0}}
 
-  html { scroll-behavior: smooth; }
+/* floating header */
+.top{position:sticky;top:14px;z-index:30;display:flex;justify-content:space-between;align-items:center;padding-inline:clamp(18px,4vw,44px);pointer-events:none}
+.top>*{pointer-events:auto}
+.me{display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:999px;padding:5px 5px 5px 16px;box-shadow:var(--shadow)}
+.l-en .me{padding:5px 16px 5px 5px}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--calli);font-size:20px;line-height:1;padding-top:4px}
+.me b{display:block;font-size:14px;font-weight:600;line-height:1.2}
+.me small{display:block;font-size:11.5px;color:var(--soft);line-height:1.3}
+.tools{display:flex;gap:8px}
+.round{width:46px;height:46px;border-radius:50%;background:var(--paper);box-shadow:var(--shadow);border:0;display:grid;place-items:center;cursor:pointer;font:600 13px var(--sans);color:var(--ink)}
+.round svg{width:18px;height:18px}
+.menu{position:absolute;top:58px;inset-inline-end:clamp(18px,4vw,44px);background:var(--paper);border-radius:20px;box-shadow:var(--shadow);padding:10px;min-width:200px;display:none}
+.menu.open{display:grid}
+.menu a{padding:10px 14px;border-radius:12px;font-size:15px}
+.menu a:hover{background:var(--bg)}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Jost', sans-serif;
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+/* hero */
+.hero{text-align:center;padding:clamp(70px,11vw,140px) 0 clamp(60px,8vw,100px);background-image:radial-gradient(circle,#DCDCD8 1px,transparent 1.3px);background-size:22px 22px;background-position:center;margin-top:-60px;padding-top:calc(clamp(70px,11vw,140px) + 60px);-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.hero-in{-webkit-mask-image:none;mask-image:none}
+.name{font-family:var(--calli);font-size:clamp(110px,17vw,200px);line-height:1;font-weight:700;letter-spacing:0}
+.tagline{font-size:clamp(18px,2vw,23px);color:var(--soft);max-width:42ch;margin:22px auto 0;line-height:1.7;font-weight:400}
+.tagline b{color:var(--ink);font-weight:500}
+.w{display:inline-block}
+@media (prefers-reduced-motion:no-preference){
+  .w{animation:blurin .9s cubic-bezier(.2,.7,.2,1) both}
+  .name{animation:blurin 1.1s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes blurin{from{filter:blur(10px);opacity:.15;transform:translateY(6px)}}
+}
+.ctas{display:flex;gap:12px;justify-content:center;margin-top:40px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 26px;font-weight:600;font-size:15px;transition:transform .2s ease,box-shadow .2s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn.dark{background:linear-gradient(#3A3A3A,#141414);color:#fff;box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 10px 24px -10px rgba(0,0,0,.6)}
+.btn.light{background:var(--paper);box-shadow:var(--shadow)}
 
-  /* NOISE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 0; opacity: 0.5;
-  }
+/* proof row */
+.proof{display:flex;justify-content:space-between;align-items:center;gap:24px;padding-block:22px;flex-wrap:wrap}
+.stackicons{display:flex;align-items:center;gap:14px}
+.stackicons .ic{display:flex}
+.stackicons img,.stackicons span.ph{width:38px;height:38px;border-radius:11px;border:2px solid var(--bg);margin-inline-start:-10px;background:#ddd;object-fit:cover}
+.stackicons .ic>*:first-child{margin-inline-start:0}
+.stackicons b{display:block;font-size:15px;line-height:1.2}
+.stackicons small{font-size:13px;color:var(--soft)}
+.techs{display:flex;gap:26px;color:#B3B3AF;font-weight:600;font-size:15px;direction:ltr;flex-wrap:wrap}
 
-  /* AMBIENT GLOW */
-  .ambient {
-    position: fixed; top: -20vh; left: -10vw;
-    width: 60vw; height: 60vw;
-    background: radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%);
-    pointer-events: none; z-index: 0;
-    animation: floatAmbient 8s ease-in-out infinite alternate;
+/* section headings */
+.sec{padding-block:clamp(70px,9vw,120px)}
+.h-center{text-align:center;font-size:clamp(34px,5vw,58px);font-weight:600;margin-bottom:clamp(36px,5vw,60px)}
+.h-two{font-size:clamp(34px,4.6vw,54px);font-weight:600;line-height:1.2}
+.h-two .g{color:#A5A5A1;display:block}
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{animation:blurin linear both;animation-timeline:view();animation-range:entry 0% entry 100%}
   }
-  .ambient2 {
-    position: fixed; bottom: -20vh; right: -10vw;
-    width: 50vw; height: 50vw;
-    background: radial-gradient(circle, rgba(0,212,170,0.08) 0%, transparent 70%);
-    pointer-events: none; z-index: 0;
-    animation: floatAmbient 10s ease-in-out infinite alternate-reverse;
-  }
+}
 
-  @keyframes floatAmbient {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(3vw, 3vh) scale(1.05); }
-  }
+/* work cards */
+.work{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:1/1.02;background:var(--tint);isolation:isolate;display:block}
+.card.wide{grid-column:span 2;aspect-ratio:2.1/1}
+.shots{position:absolute;inset:0;display:flex;justify-content:center;gap:4%;padding-top:5%;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.shots img{width:27%;height:auto;border-radius:clamp(10px,1.4vw,18px);box-shadow:0 20px 40px -18px rgba(0,0,0,.55);align-self:flex-start}
+.shots img:nth-child(2){margin-top:5%}
+.card.wide .shots img{width:21%}
+.card:hover .shots{transform:translateY(-10px) scale(1.02)}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(0,0,0,.55) 62%,rgba(0,0,0,.85));z-index:1}
+.cap{position:absolute;inset-inline:0;bottom:0;z-index:2;color:#fff;padding:clamp(18px,2.6vw,30px);display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.cap h3{font-size:clamp(24px,2.6vw,32px);font-weight:600;line-height:1.2}
+.cap p{font-size:14.5px;opacity:.88;line-height:1.65;margin-top:4px;max-width:46ch}
+.badge{flex:none;font-size:13px;font-weight:600;background:rgba(255,255,255,.16);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:6px 14px;white-space:nowrap}
+.go{position:absolute;top:18px;inset-inline-start:18px;z-index:2;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);color:#111;display:grid;place-items:center;opacity:0;transform:scale(.85);transition:.25s}
+.card:hover .go,.card:focus-visible .go{opacity:1;transform:none}
+@media (max-width:760px){
+  .work{grid-template-columns:1fr}
+  .card.wide{grid-column:auto;aspect-ratio:1/1.02}
+  .card.wide .shots img{width:30%}
+  .card.wide .shots img:nth-child(n+4){display:none}
+}
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.2rem 4rem;
-    background: rgba(10,10,15,0.8);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400; font-size: 1.4rem;
-    letter-spacing: 0.05em;
-    color: var(--text); text-decoration: none;
-    letter-spacing: 0.02em;
-  }
-  .nav-logo span { color: var(--accent); }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a {
-    color: var(--muted); text-decoration: none; font-size: 0.9rem;
-    font-weight: 500; transition: color 0.2s; letter-spacing: 0.02em;
-  }
-  .nav-links a:hover { color: var(--text); }
+/* about */
+.about{display:grid;grid-template-columns:1fr 340px;gap:clamp(30px,6vw,80px);align-items:start}
+.l-en .about{grid-template-columns:1fr 340px}
+.about-copy{display:grid;gap:18px;margin-top:30px;color:#4E4E4B;max-width:58ch}
+.about-copy b{color:var(--ink);font-weight:600}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.fact{background:var(--paper);border-radius:999px;padding:7px 16px;font-size:14px;box-shadow:var(--shadow)}
+.profile{background:var(--ink);color:#fff;border-radius:24px;padding:28px;position:sticky;top:96px}
+.profile .big{font-family:var(--calli);font-size:84px;line-height:1.1}
+.profile .role{color:#9C9C98;font-size:14.5px;margin-top:6px}
+.profile hr{border:0;border-top:1px solid #2A2A2A;margin:22px 0}
+.socials{display:flex;gap:8px;flex-wrap:wrap}
+.socials a{width:42px;height:42px;border-radius:50%;background:#222;display:grid;place-items:center;transition:background .2s}
+.socials a:hover{background:#3A3A3A}
+.socials svg{width:18px;height:18px;fill:#fff}
+@media (max-width:860px){.about,.l-en .about{grid-template-columns:1fr}.profile{position:static}}
 
-  /* SECTIONS */
-  section { position: relative; z-index: 1; }
+/* path */
+.path{display:grid;gap:12px;max-width:760px;margin-inline:auto}
+.job{background:var(--paper);border-radius:20px;box-shadow:var(--shadow);padding:22px 26px;display:grid;grid-template-columns:1fr auto;gap:4px 20px}
+.job h3{font-size:19px}
+.job .r{color:var(--soft);font-size:14.5px}
+.job .d{grid-row:1/3;grid-column:2;align-self:center;font-size:14px;color:var(--soft);white-space:nowrap}
+.job p{grid-column:1/-1;margin-top:10px;font-size:15.5px;color:#4E4E4B}
+.now{display:inline-block;width:7px;height:7px;border-radius:50%;background:#26A65B;margin-inline-end:6px;vertical-align:middle}
+@media (max-width:560px){.job{grid-template-columns:1fr}.job .d{grid-row:auto;grid-column:auto}}
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex; align-items: center;
-    padding: 8rem 4rem 4rem;
-    max-width: 1200px; margin: 0 auto;
-  }
-  .hero-content { max-width: 700px; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: rgba(108,99,255,0.12); border: 1px solid rgba(108,99,255,0.3);
-    color: var(--accent); padding: 0.4rem 1rem; border-radius: 50px;
-    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em;
-    text-transform: uppercase; margin-bottom: 2rem;
-    animation: fadeUp 0.6s ease both;
-  }
-  .hero-badge::before {
-    content: ''; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--accent3); animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+/* services: hairline grid */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.s{padding:30px clamp(18px,3vw,34px) 34px;border-bottom:1px solid var(--line);border-inline-start:1px solid var(--line)}
+.s:nth-child(3n+1){border-inline-start:0}
+.s .k{font-size:13px;color:var(--soft);direction:ltr;unicode-bidi:isolate}
+.s h3{font-size:20px;margin:8px 0 8px}
+.s p{color:#5A5A57;font-size:15.5px}
+@media (max-width:860px){.svc{grid-template-columns:1fr 1fr}.s:nth-child(3n+1){border-inline-start:1px solid var(--line)}.s:nth-child(2n+1){border-inline-start:0}}
+@media (max-width:560px){.svc{grid-template-columns:1fr}.s{border-inline-start:0!important}}
 
-  h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.5rem, 8vw, 6.5rem);
-    font-weight: 400; line-height: 1.0;
-    letter-spacing: 0.01em;
-    animation: fadeUp 0.6s 0.1s ease both;
-  }
-  h1 .highlight {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+/* contact */
+.contact{text-align:center}
+.contact h2{font-size:clamp(38px,6.4vw,76px);font-weight:600;line-height:1.15}
+.contact h2 .g{color:#A5A5A1}
+.contact p{color:var(--soft);margin-top:16px}
+.mail{display:inline-block;margin-top:26px;font-size:clamp(18px,2.4vw,26px);font-weight:500;border-bottom:1.5px solid var(--ink);direction:ltr}
+footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:24px;font-size:14px;color:var(--soft)}
+footer nav{display:flex;gap:20px}
+footer a:hover{color:var(--ink)}
 
-  .hero-desc {
-    color: var(--muted); font-size: 1.1rem; max-width: 520px;
-    margin: 1.5rem 0 2.5rem; line-height: 1.7;
-    font-weight: 300;
-    animation: fadeUp 0.6s 0.2s ease both;
-  }
-
-  .hero-btns {
-    display: flex; gap: 1rem; flex-wrap: wrap;
-    animation: fadeUp 0.6s 0.3s ease both;
-  }
-  .btn-primary {
-    background: var(--accent); color: #fff;
-    padding: 0.85rem 2rem; border-radius: 8px;
-    text-decoration: none; font-weight: 400; font-size: 0.95rem;
-    transition: all 0.2s; border: none; cursor: pointer;
-    display: inline-flex; align-items: center; gap: 0.5rem;
-  }
-  .btn-primary:hover { background: #7d75ff; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(108,99,255,0.4); }
-  .btn-outline {
-    background: transparent; color: var(--text);
-    padding: 0.85rem 2rem; border-radius: 8px;
-    text-decoration: none; font-weight: 500; font-size: 0.95rem;
-    border: 1px solid var(--border); transition: all 0.2s;
-    display: inline-flex; align-items: center; gap: 0.5rem;
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-
-  .hero-stats {
-    display: flex; gap: 3rem; margin-top: 4rem;
-    animation: fadeUp 0.6s 0.4s ease both;
-  }
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400;
-    color: var(--text); letter-spacing: 0.02em;
-  }
-  .stat-num span { color: var(--accent); }
-  .stat-label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.2rem; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* CONTAINERS */
-  .container { max-width: 1200px; margin: 0 auto; padding: 6rem 4rem; }
-
-  /* SECTION HEADER */
-  .section-label {
-    display: inline-block;
-    font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--accent);
-    margin-bottom: 1rem;
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 4.5vw, 3.5rem);
-    font-weight: 400; letter-spacing: 0.01em;
-    line-height: 1.1; margin-bottom: 1rem;
-  }
-  .section-desc { color: var(--muted); max-width: 500px; font-size: 1rem; line-height: 1.7; font-weight: 300; }
-
-  /* DIVIDER */
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border), transparent);
-    max-width: 1200px; margin: 0 auto;
-  }
-
-  /* EXPERIENCE */
-  .exp-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .exp-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2rem;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-  .exp-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent3));
-    opacity: 0; transition: opacity 0.3s;
-  }
-  .exp-card:hover { border-color: rgba(108,99,255,0.4); transform: translateY(-4px); }
-  .exp-card:hover::before { opacity: 1; }
-
-  .exp-company {
-    font-family: 'Cormorant Garamond', serif; font-weight: 300;
-    font-size: 1.2rem; margin-bottom: 0.3rem;
-  }
-  .exp-role {
-    color: var(--accent3); font-size: 0.85rem; font-weight: 500;
-    margin-bottom: 0.8rem; letter-spacing: 0.02em;
-  }
-  .exp-period {
-    color: var(--muted); font-size: 0.8rem; margin-bottom: 1rem;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .exp-period::before {
-    content: '';width: 5px; height: 5px; border-radius: 50%;
-    background: var(--accent3);
-  }
-  .exp-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.6; font-weight: 300; }
-  .exp-tag {
-    display: inline-block;
-    background: rgba(108,99,255,0.1); border: 1px solid rgba(108,99,255,0.2);
-    color: var(--accent); padding: 0.2rem 0.7rem; border-radius: 4px;
-    font-size: 0.75rem; font-weight: 500; margin: 0.8rem 0.3rem 0 0;
-  }
-  .exp-tag.cyber {
-    background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.2);
-    color: var(--accent2);
-  }
-
-  /* PROJECTS */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .project-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 1.8rem;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s;
-    display: flex; flex-direction: column;
-    position: relative; overflow: hidden;
-  }
-  .project-card:hover {
-    border-color: rgba(108,99,255,0.4);
-    transform: translateY(-6px);
-    box-shadow: 0 20px 60px rgba(108,99,255,0.12);
-  }
-  .project-icon {
-    width: 56px; height: 56px; border-radius: 14px;
-    background: linear-gradient(135deg, rgba(108,99,255,0.3), rgba(0,212,170,0.2));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.6rem; margin-bottom: 1.2rem;
-    border: 1px solid rgba(108,99,255,0.2);
-  }
-  .project-name {
-    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 300;
-    margin-bottom: 0.5rem; letter-spacing: 0.01em;
-  }
-  .project-desc {
-    color: var(--muted); font-size: 0.9rem; line-height: 1.6;
-    flex: 1; font-weight: 300; margin-bottom: 1.2rem;
-  }
-  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
-  .tag {
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-    color: var(--muted); padding: 0.2rem 0.6rem; border-radius: 4px;
-    font-size: 0.75rem; font-weight: 500;
-  }
-  .project-links { display: flex; gap: 0.8rem; }
-  .store-link {
-    flex: 1; text-align: center;
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-    color: var(--text); text-decoration: none; padding: 0.5rem 0.8rem;
-    border-radius: 8px; font-size: 0.78rem; font-weight: 500;
-    transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-  }
-  .store-link:hover { background: rgba(108,99,255,0.15); border-color: var(--accent); color: var(--accent); }
-  .store-link .store-icon { font-size: 1rem; }
-
-  /* CYBERSECURITY BADGE */
-  .cyber-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: rgba(255,107,107,0.12); border: 1px solid rgba(255,107,107,0.3);
-    color: var(--accent2); padding: 0.3rem 0.8rem; border-radius: 50px;
-    font-size: 0.75rem; font-weight: 400; margin-bottom: 0.8rem;
-    text-transform: uppercase; letter-spacing: 0.06em;
-  }
-
-  /* SKILLS */
-  .skills-section { background: var(--surface); }
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1rem;
-    margin-top: 3rem;
-  }
-  .skill-group {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 14px; padding: 1.5rem;
-    backdrop-filter: blur(10px);
-  }
-  .skill-group-title {
-    font-family: 'Cormorant Garamond', serif; font-weight: 300;
-    font-size: 0.9rem; color: var(--text);
-    margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .skill-group-title::before {
-    content: ''; width: 8px; height: 8px; border-radius: 2px;
-    background: var(--accent);
-  }
-  .skill-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .skill-pill {
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-    color: var(--muted); padding: 0.3rem 0.8rem; border-radius: 6px;
-    font-size: 0.82rem; transition: all 0.2s;
-  }
-  .skill-pill:hover {
-    background: rgba(108,99,255,0.15); border-color: rgba(108,99,255,0.3);
-    color: var(--accent);
-  }
-
-  /* CONTACT */
-  .contact-section {
-    text-align: center;
-  }
-  .contact-links {
-    display: flex; justify-content: center; gap: 1rem;
-    flex-wrap: wrap; margin-top: 3rem;
-  }
-  .contact-btn {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    background: var(--card-bg); border: 1px solid var(--border);
-    color: var(--text); text-decoration: none;
-    padding: 0.9rem 1.8rem; border-radius: 10px;
-    font-size: 0.95rem; font-weight: 500;
-    transition: all 0.2s; backdrop-filter: blur(10px);
-  }
-  .contact-btn:hover {
-    border-color: var(--accent); color: var(--accent);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(108,99,255,0.2);
-  }
-  .contact-btn .icon { font-size: 1.1rem; }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem 4rem;
-    display: flex; justify-content: space-between; align-items: center;
-    color: var(--muted); font-size: 0.85rem;
-    position: relative; z-index: 1;
-  }
-
-  /* SCROLL INDICATOR */
-  .scroll-indicator {
-    position: absolute; bottom: 3rem; left: 50%;
-    transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    color: var(--muted); font-size: 0.75rem; letter-spacing: 0.1em;
-    text-transform: uppercase; animation: bounce 2s infinite;
-  }
-  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
-  .scroll-line {
-    width: 1px; height: 40px;
-    background: linear-gradient(to bottom, var(--accent), transparent);
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    .hero { padding: 7rem 1.5rem 4rem; }
-    .container { padding: 4rem 1.5rem; }
-    .exp-grid { grid-template-columns: 1fr; }
-    .hero-stats { gap: 2rem; }
-    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem 1.5rem; }
-  }
+.roleline{font-family:var(--mono);font-size:14px;color:var(--soft);letter-spacing:.04em;margin-top:10px;direction:ltr}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr)}
+.m{padding:26px clamp(18px,3vw,30px);border-inline-start:1px solid var(--line);display:grid;gap:8px;align-content:start}
+.m:first-child{border-inline-start:0}
+.m b{font-size:clamp(28px,3.2vw,38px);font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.l-ar .m b.ltr{text-align:right}
+.m span{font-size:13.5px;color:var(--soft);line-height:1.55}
+@media (max-width:760px){.metrics{grid-template-columns:1fr 1fr}.m:nth-child(3){border-inline-start:0}.m:nth-child(n+3){border-top:1px solid var(--line)}}
+.sub-center{text-align:center;color:var(--soft);max-width:56ch;margin:0 auto clamp(36px,5vw,56px)}
+.stk{display:block;margin-top:10px;font-family:var(--mono);font-size:12px;opacity:.78;direction:ltr;unicode-bidi:isolate;text-align:left}
+.l-ar .stk{text-align:right}
+.s .k{font-family:var(--mono);font-size:12.5px}
+.job ul{grid-column:1/-1;margin-top:12px;padding-inline-start:18px;display:grid;gap:5px;font-size:15px;color:#4E4E4B;line-height:1.7}
+.job li::marker{color:#B5B5B0}
+.job .r{direction:ltr;unicode-bidi:isolate;text-align:start}
+.l-ar .job .r{text-align:right}
+.stack-table{max-width:860px;margin-inline:auto;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:130px 1fr;gap:20px;padding:16px 4px;border-bottom:1px solid var(--line);align-items:baseline}
+.lbl{color:var(--soft);font-size:15px}
+.val{font-family:var(--mono);font-size:14px;direction:ltr;unicode-bidi:isolate;text-align:left}
+.l-ar .val{text-align:right}
+@media (max-width:560px){.row{grid-template-columns:1fr;gap:4px}}
 </style>
 </head>
 <body>
 
-<div class="ambient"></div>
-<div class="ambient2"></div>
+<header class="top">
+  <a class="me" href="#top">
+    <span class="avatar">ز</span>
+    <span><b><span class="ar">زايد بن شملان</span><span class="en">Zayed Bin Shamlan</span></b><small>Software Engineer</small></span>
+  </a>
+  <div class="tools">
+    <button class="round" id="lang" type="button" aria-label="Switch language"><span class="ar">EN</span><span class="en">ع</span></button>
+    <button class="round" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg></button>
+  </div>
+  <nav class="menu" id="menu">
+    <a href="#work"><span class="ar">المشاريع</span><span class="en">Projects</span></a>
+    <a href="#about"><span class="ar">نبذة</span><span class="en">About</span></a>
+    <a href="#engineering"><span class="ar">منهجية العمل</span><span class="en">Engineering</span></a>
+    <a href="#path"><span class="ar">الخبرة</span><span class="en">Experience</span></a>
+    <a href="#stack"><span class="ar">التقنيات</span><span class="en">Stack</span></a>
+    <a href="#contact"><span class="ar">تواصل</span><span class="en">Contact</span></a>
+  </nav>
+</header>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#"><span>Z</span>ayed</a>
-  <ul class="nav-links">
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="https://drive.google.com/file/d/1apQtXUXY-Up0FS8kmDgedx1sf-VigtTA/view" target="_blank" class="btn-primary" style="padding:0.6rem 1.2rem;font-size:0.85rem;">Resume ↗</a>
-</nav>
+<main id="top">
+<div class="frame">
 
-<!-- HERO -->
-<section>
-  <div class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">Available for work</div>
-      <h1>Building apps<br>that <span class="highlight">matter.</span></h1>
-      <p class="hero-desc">Mobile Developer & Digital Fraud Analyst with a Bachelor's in Information Technology. Crafting high-performance mobile applications for iOS & Android — with deep expertise in cybersecurity and digital fraud prevention.</p>
-      <div class="hero-btns">
-        <a href="#projects" class="btn-primary">View Projects →</a>
-        <a href="#contact" class="btn-outline">Get in Touch</a>
-      </div>
-      <div class="hero-stats">
-        <div>
-          <div class="stat-num">8<span>+</span></div>
-          <div class="stat-label">Apps Shipped</div>
-        </div>
-        <div>
-          <div class="stat-num">3<span>+</span></div>
-          <div class="stat-label">Years Experience</div>
-        </div>
-        <div>
-          <div class="stat-num">3</div>
-          <div class="stat-label">Companies</div>
-        </div>
-      </div>
+  <section class="hero pad">
+    <h1 class="name"><span class="ar">زايد</span><span class="en" style="font-family:var(--sans);font-weight:700;letter-spacing:-.04em;font-size:.6em">Zayed</span></h1>
+    <p class="roleline">Software Engineer · Mobile &amp; Backend</p>
+    <p class="tagline ar">
+      <span class="w" style="animation-delay:.25s">أصمّم وأبني <b>تطبيقات جوال وأنظمة خلفية قابلة للتوسع</b>،</span>
+      <span class="w" style="animation-delay:.45s">من هيكلة الكود وتصميم قواعد البيانات حتى النشر في بيئة الإنتاج.</span>
+    </p>
+    <p class="tagline en">
+      <span class="w" style="animation-delay:.25s">I design and build <b>scalable mobile apps and backend systems</b>,</span>
+      <span class="w" style="animation-delay:.45s">from code architecture and database design to production release.</span>
+    </p>
+    <div class="ctas">
+      <a class="btn dark" href="#work"><span class="ar">استعرض المشاريع</span><span class="en">View projects</span></a>
+      <a class="btn light" href="#contact"><span class="ar">تواصل معي</span><span class="en">Get in touch</span></a>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="metrics">
+      <div class="m"><b>9</b><span class="ar">تطبيقات في بيئة الإنتاج على App Store وGoogle Play</span><span class="en">apps in production on the App Store and Google Play</span></div>
+      <div class="m"><b class="ltr">20K+</b><span class="ar">مستخدم على منصة تبيّن لمكافحة الاحتيال</span><span class="en">users on the Tabayyun anti-fraud platform</span></div>
+      <div class="m"><b class="ltr">~10K</b><span class="ar">مستخدم على تطبيق عيادة سمارت كارب</span><span class="en">users on the Smart Carb clinic app</span></div>
+      <div class="m"><b>2023</b><span class="ar">بداية العمل الاحترافي، مع 4 جهات حتى الآن</span><span class="en">building professionally, across 4 companies</span></div>
     </div>
   </div>
-  <div class="scroll-indicator">
-    <div class="scroll-line"></div>
-    Scroll
-  </div>
-</section>
 
-<div class="divider"></div>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="container">
-    <div class="section-label">Career</div>
-    <h2 class="section-title">Work Experience</h2>
-    <p class="section-desc">Building real-world mobile products across multiple industries and domains.</p>
-
-    <div class="exp-grid">
-
-      <!-- Tabayyun - CURRENT - Full width at top -->
-      <div class="exp-card" style="grid-column: 1/-1; border-color: rgba(255,107,107,0.3);">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
-          <div>
-            <div class="cyber-badge">🛡️ Cybersecurity · Current Role</div>
-            <div class="exp-company">تبيَّن | Tabayyun</div>
-            <div class="exp-role">Mobile Developer & Digital Fraud Analyst</div>
-            <div class="exp-period">June 2025 — Present · Riyadh</div>
-          </div>
-          <div style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:var(--accent3);padding:0.4rem 1rem;border-radius:50px;font-size:0.78rem;font-weight:600;white-space:nowrap;height:fit-content;">
-            ● Currently Working Here
-          </div>
+  <section class="band sec pad" id="work">
+    <h2 class="h-center reveal" style="margin-bottom:14px"><span class="ar">مشاريع في بيئة الإنتاج</span><span class="en">Shipped to production</span></h2>
+    <p class="sub-center"><span class="ar">تطبيقات منشورة ويستخدمها مستخدمون فعليون. لكل مشروع نطاقه التقني والتقنيات المستخدمة فيه.</span><span class="en">Published apps with real users. Each card lists the technical scope and the stack behind it.</span></p>
+    <div class="work">
+      <a class="card wide" style="--tint:#3F6B32" href="https://apps.apple.com/sa/app/smart-carb/id6473648885" target="_blank" rel="noopener">
+        <div class="shots"><img onerror="this.remove()" src="assets/smartcarb-1.jpg" alt="" loading="lazy"><img onerror="this.remove()" src="assets/smartcarb-2.jpg" alt="" loading="lazy"><img onerror="this.remove()" src="assets/smartcarb-3.jpg" alt="" loading="lazy"></div>
+        <span class="go" aria-hidden="true">↗</span>
+        <div class="cap">
+          <div><h3><span class="ar">سمارت كارب</span><span class="en">Smart Carb</span></h3>
+            <p><span class="ar">تطبيق عيادة تغذية: خطط وجبات محسوبة على الاحتياج الحراري، تتبع الماكروز، تحليل صور الأطباق ومسح الباركود، ونظام حجز مواعيد مدمج مع بوابة دفع.</span><span class="en">Nutrition clinic app: calorie-based meal plans, macro tracking, plate-photo analysis and barcode scanning, plus appointment booking integrated with a payment gateway.</span></p>
+            <span class="stk">Flutter · Bloc · REST APIs · Payment Gateway</span></div>
+          <span class="badge ltr">~10K users</span>
         </div>
-        <p class="exp-desc" style="margin-top:1rem;">Leading the development of the Tabayyun mobile application using Flutter and Dart. Monitoring and analyzing digital transaction patterns to detect and prevent fraudulent activities. Implementing robust security protocols and data encryption to protect user information, and collaborating with backend teams to integrate secure RESTful APIs.</p>
-        <span class="exp-tag cyber">Digital Fraud Analysis</span>
-        <span class="exp-tag cyber">Cybersecurity</span>
-        <span class="exp-tag">Flutter</span>
-        <span class="exp-tag">Dart</span>
-        <span class="exp-tag">Security Protocols</span>
-        <span class="exp-tag">REST APIs</span>
-      </div>
-
-      <!-- Speero -->
-      <div class="exp-card">
-        <div class="exp-company">Speero</div>
-        <div class="exp-role">Mobile Developer · Full-time</div>
-        <div class="exp-period">Dec 2024 — May 2025 · Riyadh, On-site</div>
-        <p class="exp-desc">Developed and maintained the company's mobile application, focusing on user experience and interface design. Collaborated with teams to implement features and conduct thorough testing for quality assurance.</p>
-        <span class="exp-tag">Flutter</span><span class="exp-tag">Dart</span><span class="exp-tag">Firebase</span>
-      </div>
-
-      <!-- Bit LLC -->
-      <div class="exp-card">
-        <div class="exp-company">Bit LLC</div>
-        <div class="exp-role">Mobile Developer</div>
-        <div class="exp-period">2023 — 2024</div>
-        <p class="exp-desc">Engineered cross-platform mobile applications using Flutter, Dart, and Firebase. Partnered with designers and product managers to deliver comprehensive mobile solutions.</p>
-        <span class="exp-tag">Flutter</span><span class="exp-tag">Dart</span><span class="exp-tag">Firebase</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="container">
-    <div class="section-label">Portfolio</div>
-    <h2 class="section-title">My Projects</h2>
-    <p class="section-desc">A collection of apps built with Flutter — from idea to the App Store and Google Play.</p>
-
-    <div class="projects-grid">
-
-      <!-- Tabayyun -->
-      <div class="project-card">
-        <div class="project-icon">🛡️</div>
-        <div class="cyber-badge">Cybersecurity</div>
-        <div class="project-name">تبيَّن | Tabayyun</div>
-        <p class="project-desc">An intelligent cybersecurity app designed to protect users from suspicious and fraudulent links. Uses advanced technologies to analyze URLs and assess their risk level before any interaction — enhancing digital awareness for individuals and organizations.</p>
-        <div class="project-tags">
-          <span class="tag">Flutter</span><span class="tag">Dart</span>
-          <span class="tag">AI/ML</span><span class="tag">Deep Fake Detection</span>
-          <span class="tag">Bluetooth</span><span class="tag">Firebase</span>
-        </div>
-        <div class="project-links">
-          <a href="https://apps.apple.com/sa/app/tabayyun-%D8%AA%D8%A8%D9%8A%D9%86/id6748387461" target="_blank" class="store-link">
-            <span class="store-icon">🍎</span> App Store
-          </a>
-        </div>
-      </div>
-
-      <!-- Zillak -->
-      <div class="project-card">
-        <div class="project-icon">💙</div>
-        <div class="project-name">Zillak</div>
-        <p class="project-desc">The first app in Saudi Arabia providing comprehensive solutions for supporting autistic children and their families. Features shadow teacher booking, a trusted directory of autism centers, and an interactive parent community.</p>
-        <div class="project-tags">
-          <span class="tag">Flutter</span><span class="tag">Firebase</span>
-          <span class="tag">Bloc</span><span class="tag">Geolocation</span>
-          <span class="tag">Push Notifications</span>
-        </div>
-        <div class="project-links">
-          <a href="https://play.google.com/store/apps/details?id=com.zillak.zillakApp" target="_blank" class="store-link">
-            <span class="store-icon">▶</span> Google Play
-          </a>
-          <a href="https://apps.apple.com/sa/app/%D8%B8%D9%84%D9%83/id6737775933" target="_blank" class="store-link">
-            <span class="store-icon">🍎</span> App Store
-          </a>
-        </div>
-      </div>
-
-      <!-- Habit Trackr -->
-      <div class="project-card">
-        <div class="project-icon">✅</div>
-        <div class="project-name">Habit Trackr</div>
-        <p class="project-desc">A simple yet effective app that helps users build positive daily habits and improve their lifestyle. Features daily habit creation and tracking, continuous progress monitoring, and daily reminders to stay consistent.</p>
-        <div class="project-tags">
-          <span class="tag">Flutter</span><span class="tag">Dart</span>
-          <span class="tag">Local Notifications</span><span class="tag">SQLite</span>
-        </div>
-        <div class="project-links">
-          <a href="https://apps.apple.com/sa/app/habit-trackr/id6752357232" target="_blank" class="store-link">
-            <span class="store-icon">🍎</span> App Store
-          </a>
-        </div>
-      </div>
-
-      <!-- Sikka -->
-      <div class="project-card">
-        <div class="project-icon">⚽</div>
-        <div class="project-name">Sikka | سكّه</div>
-        <p class="project-desc">The ultimate football experience app for booking top-tier pitches and facilities. Includes real-time availability, interactive maps, team management, tournament tracking, and integrated payments.</p>
-        <div class="project-tags">
-          <span class="tag">Flutter</span><span class="tag">Firebase</span>
-          <span class="tag">Google Maps</span><span class="tag">Payment Gateway</span>
-        </div>
-        <div class="project-links">
-          <a href="https://apps.apple.com/sa/app/sikka-%D8%B3%D9%83%D9%87/id6480044082" target="_blank" class="store-link">
-            <span class="store-icon">🍎</span> App Store
-          </a>
-        </div>
-      </div>
-
-      <!-- TARF -->
-      <div class="project-card">
-        <div class="project-icon">👜</div>
-        <div class="project-name">تـرف | TARF</div>
-        <p class="project-desc">A luxury online store offering premium mobile accessories, women's bags, and elegant accessories. Features elegant product showcases, advanced filtering, secure checkout, and delivery tracking.</p>
-        <div class="project-tags">
-          <span class="tag">Flutter</span><span class="tag">REST APIs</span>
-          <span class="tag">Firebase</span><span class="tag">Payment Gateway</span>
-        </div>
-        <div class="project-links">
-          <a href="https://play.google.com/store/apps/details?id=com.app.store_app" target="_blank" class="store-link">
-            <span class="store-icon">▶</span> Google Play
-          </a>
-        </div>
-      </div>
-
-      <!-- Fazkr -->
-      <div class="project-card">
-        <div class="project-icon">📿</div>
-        <div class="project-name">فذكر | Fazkr</div>
-        <p class="project-desc">An application that helps users remember and repeat daily dhikr and Islamic supplications. Includes morning/evening dhikr, Quranic supplications, and authentic Islamic sources with Arabic text rendering.</p>
-        <div class="project-tags">
-          <span class="tag">Flutter</span><span class="tag">SQLite</span>
-          <span class="tag">Bloc</span><span class="tag">Local Notifications</span>
-          <span class="tag">Arabic Text</span>
-        </div>
-        <div class="project-links">
-          <a href="https://play.google.com/store/apps/details?id=com.zayed.fzkr" target="_blank" class="store-link">
-            <span class="store-icon">▶</span> Google Play
-          </a>
-        </div>
-      </div>
-
-
-      <!-- ProSave -->
-      <div class="project-card">
-        <div class="project-icon">🧾</div>
-        <div class="project-name">ProSave</div>
-        <p class="project-desc">An application for managing invoices and documents with seamless sharing capabilities. Helps businesses and individuals organize, store, and distribute their documents efficiently.</p>
-        <div class="project-tags">
-          <span class="tag">Flutter</span><span class="tag">Dart</span>
-          <span class="tag">Document Management</span><span class="tag">File Sharing</span>
-        </div>
-      </div>
-
-      <!-- Esmani -->
-      <div class="project-card">
-        <div class="project-icon">🎙️</div>
-        <div class="project-name">Esmani</div>
-        <p class="project-desc">An application designed to document the academic process through audio sharing. Enables students and educators to record, share, and organize academic content via audio seamlessly.</p>
-        <div class="project-tags">
-          <span class="tag">Flutter</span><span class="tag">Dart</span>
-          <span class="tag">Audio Recording</span><span class="tag">File Sharing</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- SKILLS -->
-<section id="skills" class="skills-section">
-  <div class="container">
-    <div class="section-label">Expertise</div>
-    <h2 class="section-title">My Skills</h2>
-    <p class="section-desc">Tools and technologies I use to build production-grade mobile applications.</p>
-
-    <div class="skills-grid">
-      <div class="skill-group">
-        <div class="skill-group-title">Mobile Development</div>
-        <div class="skill-pills">
-          <span class="skill-pill">Flutter</span>
-          <span class="skill-pill">Dart</span>
-          <span class="skill-pill">iOS</span>
-          <span class="skill-pill">Android</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">State Management</div>
-        <div class="skill-pills">
-          <span class="skill-pill">Bloc</span>
-          <span class="skill-pill">Provider</span>
-          <span class="skill-pill">GetX</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Backend & APIs</div>
-        <div class="skill-pills">
-          <span class="skill-pill">Firebase</span>
-          <span class="skill-pill">REST APIs</span>
-          <span class="skill-pill">SQLite</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Design & UX</div>
-        <div class="skill-pills">
-          <span class="skill-pill">UI/UX Design</span>
-          <span class="skill-pill">Responsive Design</span>
-          <span class="skill-pill">App Performance</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Tools & Workflow</div>
-        <div class="skill-pills">
-          <span class="skill-pill">Git</span>
-          <span class="skill-pill">Geolocation</span>
-          <span class="skill-pill">Push Notifications</span>
-          <span class="skill-pill">Payment Gateways</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title" style="color: var(--accent2);">
-          <span style="background:var(--accent2);width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:0.5rem;"></span>
-          Cybersecurity Domain
-        </div>
-        <div class="skill-pills">
-          <span class="skill-pill">URL Analysis</span>
-          <span class="skill-pill">Deep Fake Detection</span>
-          <span class="skill-pill">Digital Awareness</span>
-          <span class="skill-pill">Fraud Detection</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="container contact-section">
-    <div class="section-label">Let's Talk</div>
-    <h2 class="section-title">Get In Touch</h2>
-    <p class="section-desc" style="margin: 0 auto;">Have a project in mind or want to collaborate? I'm always open to new opportunities.</p>
-    <div class="contact-links">
-      <a href="mailto:zayedbinshamlan@gmail.com" class="contact-btn">
-        <span class="icon">✉️</span> Email Me
       </a>
-      <a href="https://wa.me/966595322856" target="_blank" class="contact-btn">
-        <span class="icon">💬</span> WhatsApp
+      <a class="card" style="--tint:#1A1538" href="https://apps.apple.com/sa/app/tabayyun-%D8%AA%D8%A8%D9%8A%D9%86/id6748387461" target="_blank" rel="noopener">
+        <div class="shots"><img onerror="this.remove()" src="assets/tabayyun-1.jpg" alt="" loading="lazy"><img onerror="this.remove()" src="assets/tabayyun-2.jpg" alt="" loading="lazy"></div>
+        <span class="go" aria-hidden="true">↗</span>
+        <div class="cap">
+          <div><h3><span class="ar">تبيّن</span><span class="en">Tabayyun</span></h3>
+            <p><span class="ar">منصة لمكافحة الاحتيال الرقمي: تقييم مخاطر الروابط، كشف التزييف العميق، ومراسلة عبر Bluetooth بدون إنترنت. أقود تطوير التطبيق والخدمات الخلفية.</span><span class="en">Anti-fraud platform: link risk scoring, deepfake detection and offline Bluetooth messaging. I lead the app and backend.</span></p>
+            <span class="stk">Flutter · Laravel · PostgreSQL · MongoDB</span></div>
+          <span class="badge ltr">20K+ users</span>
+        </div>
       </a>
-      <a href="https://www.linkedin.com/in/zayed-bin-shamlan-9841092a8/" target="_blank" class="contact-btn">
-        <span class="icon">🔗</span> LinkedIn
+      <a class="card" style="--tint:#4A3DDB" href="https://apps.apple.com/us/app/mizakir/id6830238962" target="_blank" rel="noopener">
+        <div class="shots"><img onerror="this.remove()" src="assets/mizakir-1.jpg" alt="" loading="lazy"><img onerror="this.remove()" src="assets/mizakir-3.jpg" alt="" loading="lazy"></div>
+        <span class="go" aria-hidden="true">↗</span>
+        <div class="cap">
+          <div><h3><span class="ar">مذاكر</span><span class="en">Mizakir</span></h3>
+            <p><span class="ar">منتج مستقل بنموذج اشتراك: يعالج ملفات PDF والصور الممسوحة ويحوّلها إلى ملخصات وبطاقات تكرار متباعد واختبارات، مع مساعد ذكي يجيب من الملف ويستشهد بالمصدر.</span><span class="en">Independent subscription product: processes PDFs and scans into summaries, spaced-repetition cards and quizzes, with an AI tutor grounded in the source file.</span></p>
+            <span class="stk">Flutter · AI Integration · Subscriptions</span></div>
+          <span class="badge"><span class="ar">منتج مستقل</span><span class="en">Own product</span></span>
+        </div>
       </a>
-      <a href="https://drive.google.com/file/d/1apQtXUXY-Up0FS8kmDgedx1sf-VigtTA/view" target="_blank" class="contact-btn">
-        <span class="icon">📄</span> Resume
+      <a class="card" style="--tint:#0E5546" href="https://apps.apple.com/sa/app/sikka-%D8%B3%D9%83%D9%87/id6480044082" target="_blank" rel="noopener">
+        <div class="shots"><img onerror="this.remove()" src="assets/sikka-1.jpg" alt="" loading="lazy"><img onerror="this.remove()" src="assets/sikka-3.jpg" alt="" loading="lazy"></div>
+        <span class="go" aria-hidden="true">↗</span>
+        <div class="cap"><div><h3><span class="ar">سكة</span><span class="en">Sikka</span></h3>
+          <p><span class="ar">منصة حجز ملاعب: إدارة الفرق والمباريات، محفظة داخلية، وتقسيم الدفع بين اللاعبين.</span><span class="en">Pitch-booking platform: team and match management, an in-app wallet and split payments.</span></p>
+          <span class="stk">Flutter · REST APIs · Payments</span></div></div>
+      </a>
+      <a class="card" style="--tint:#0D4D2B" href="https://apps.apple.com/sa/app/%D8%AF%D8%A7%D8%B1%D9%8A-dary/id6793086614" target="_blank" rel="noopener">
+        <div class="shots"><img onerror="this.remove()" src="assets/dary-3.jpg" alt="" loading="lazy"><img onerror="this.remove()" src="assets/dary-2.jpg" alt="" loading="lazy"></div>
+        <span class="go" aria-hidden="true">↗</span>
+        <div class="cap"><div><h3><span class="ar">داري</span><span class="en">Dary</span></h3>
+          <p><span class="ar">سوق عقاري للبيع والإيجار: بحث جغرافي على الخريطة، حجز إيجار يومي، ومحادثة بين المؤجر والمستأجر.</span><span class="en">Property marketplace: geo search on the map, daily-rental booking and landlord–tenant chat.</span></p>
+          <span class="stk">Flutter · Google Maps · In-app Chat</span></div></div>
+      </a>
+      <a class="card" style="--tint:#B85C3E" href="https://apps.apple.com/sa/app/%D8%B8%D9%84%D9%83/id6737775933" target="_blank" rel="noopener">
+        <div class="shots"><img onerror="this.remove()" src="assets/zillak-1.jpg" alt="" loading="lazy"><img onerror="this.remove()" src="assets/zillak-2.jpg" alt="" loading="lazy"></div>
+        <span class="go" aria-hidden="true">↗</span>
+        <div class="cap"><div><h3><span class="ar">ظلك</span><span class="en">Zillak</span></h3>
+          <p><span class="ar">منصة خدمات لأطفال التوحد: حجز معلّم ظل وخبراء مهارات، باقات اشتراك، ودليل مراكز.</span><span class="en">Services platform for children with autism: shadow-teacher and specialist booking, subscription plans and a centers directory.</span></p>
+          <span class="stk">Flutter · Booking · Subscriptions</span></div></div>
+      </a>
+      <a class="card" style="--tint:#C9A063" href="https://apps.apple.com/sa/app/%D8%B3%D9%8A%D8%B1%D8%A9/id6757985460" target="_blank" rel="noopener">
+        <div class="shots"><img onerror="this.remove()" src="assets/seerah-1.jpg" alt="" loading="lazy"></div>
+        <span class="go" aria-hidden="true">↗</span>
+        <div class="cap"><div><h3><span class="ar">سيرة</span><span class="en">Seerah</span></h3>
+          <p><span class="ar">تطبيق تعليمي بآليات Gamification: مسار تقدّم، نقاط، وسلاسل أيام، مع اشتراكات داخل التطبيق.</span><span class="en">Gamified learning app: progress path, points and streaks, with in-app subscriptions.</span></p>
+          <span class="stk">Flutter · In-App Purchases</span></div></div>
+      </a>
+      <a class="card" style="--tint:#1E5BB8" href="https://apps.apple.com/sa/app/habit-trackr/id6752357232" target="_blank" rel="noopener">
+        <div class="shots"><img onerror="this.remove()" src="assets/habit-1.jpg" alt="" loading="lazy"></div>
+        <span class="go" aria-hidden="true">↗</span>
+        <div class="cap"><div><h3>Habit Trackr</h3>
+          <p><span class="ar">تتبّع العادات: جدولة مرنة، إحصاءات تقدّم، إشعارات مجدولة، واشتراك Premium.</span><span class="en">Habit tracker: flexible scheduling, progress stats, scheduled notifications and a premium tier.</span></p>
+          <span class="stk">Flutter · Notifications · IAP</span></div></div>
+      </a>
+      <a class="card" style="--tint:#232846" href="https://play.google.com/store/apps/details?id=com.zayed.fzkr" target="_blank" rel="noopener">
+        <div class="shots"><img onerror="this.remove()" src="assets/fthkr-3.jpg" alt="" loading="lazy"><img onerror="this.remove()" src="assets/fthkr-2.jpg" alt="" loading="lazy"></div>
+        <span class="go" aria-hidden="true">↗</span>
+        <div class="cap"><div><h3><span class="ar">فذكر</span><span class="en">Fthkr</span></h3>
+          <p><span class="ar">تطبيق أذكار على Android: تذكيرات مجدولة، مفضلة، وعدّاد، مع مساعد محادثة.</span><span class="en">Adhkar app on Android: scheduled reminders, favorites and a counter, with a chat assistant.</span></p>
+          <span class="stk">Flutter · Android · Scheduled Notifications</span></div></div>
       </a>
     </div>
+  </section>
+
+  <section class="band sec pad" id="about">
+    <div class="about">
+      <div>
+        <h2 class="h-two reveal"><span class="ar"><span class="g">أبني أنظمة</span>تعمل بثبات في بيئة الإنتاج.</span><span class="en"><span class="g">I build systems</span>that hold up in production.</span></h2>
+        <div class="about-copy">
+          <p><span class="ar"><b>مهندس برمجيات أعمل منذ 2023 على تطبيقات الجوال والأنظمة الخلفية.</b> أعمل حالياً على منصتين في بيئة الإنتاج: تبيّن (+20 ألف مستخدم) وسمارت كارب (قرابة 10 آلاف مستخدم). أتولى العمل من تحليل المتطلبات وتصميم المعمارية حتى النشر والصيانة.</span><span class="en"><b>Software engineer building mobile apps and backend systems since 2023.</b> I currently work on two production platforms: Tabayyun (20,000+ users) and Smart Carb (nearly 10,000 users), owning the work from requirements and architecture through release and maintenance.</span></p>
+          <p><span class="ar"><b>أكتب كوداً قابلاً للاختبار والصيانة.</b> أستخدم Clean Architecture بفصل طبقات domain وdata وpresentation، وأدير الحالة بـ Bloc/Cubit حتى تبقى قابلة للتوقع، وأحدد عقوداً واضحة بين التطبيق والخادم عبر واجهات RESTful.</span><span class="en"><b>I write testable, maintainable code:</b> Clean Architecture with separate domain, data and presentation layers, predictable state with Bloc/Cubit, and clear client–server contracts over RESTful APIs.</span></p>
+          <p><span class="ar"><b>الأمان عندي جزء من التصميم من البداية.</b> تعلمت ذلك من عملي في تحليل الاحتيال الرقمي، فأطبق الصلاحيات حسب الدور، وأشفّر البيانات الحساسة، وأتحقق من كل مدخل على الخادم.</span><span class="en"><b>Security is part of the design.</b> My work in digital fraud analysis made that a habit: role-based access, encrypted sensitive data, and server-side validation of every input.</span></p>
+        </div>
+        <div class="facts">
+          <span class="fact"><span class="ar">بكالوريوس تقنية معلومات · جامعة حضرموت 2023</span><span class="en">B.Sc. Information Technology · Hadramout University 2023</span></span>
+          <span class="fact"><span class="ar">العربية (اللغة الأم) · الإنجليزية (بطلاقة)</span><span class="en">Arabic (native) · English (fluent)</span></span>
+          <span class="fact"><span class="ar">الرياض، المملكة العربية السعودية</span><span class="en">Riyadh, Saudi Arabia</span></span>
+        </div>
+      </div>
+      <aside class="profile">
+        <div class="big"><span class="ar">زايد</span><span class="en" style="font-family:var(--sans);font-weight:700;font-size:.6em;letter-spacing:-.03em">Zayed</span></div>
+        <div style="font-weight:600;margin-top:4px"><span class="ar">زايد بن شملان</span><span class="en">Zayed Bin Shamlan</span></div>
+        <div class="role">Software Engineer · Mobile &amp; Backend</div>
+        <hr>
+        <div class="socials">
+          <a href="https://linkedin.com/in/zayed-shamlan-9841092a8" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3zM9.5 9.75h3.8v1.6h.06c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.13V21h-4v-4.9c0-1.17-.02-2.68-1.63-2.68-1.64 0-1.89 1.28-1.89 2.6V21h-4z"/></svg></a>
+          <a href="https://github.com/zayedbinshamlan" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a>
+          <a href="https://wa.me/966595322856" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg></a>
+          <a href="mailto:zayedbinshamlan@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4 7.3V17h16V7.3z"/></svg></a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="band sec" id="engineering" style="padding-bottom:0">
+    <div class="pad"><h2 class="h-center reveal"><span class="ar">منهجية العمل</span><span class="en">How I engineer</span></h2></div>
+    <div class="svc">
+      <div class="s"><span class="k">Architecture</span><h3><span class="ar">معمارية قابلة للتوسع</span><span class="en">Scalable architecture</span></h3><p><span class="ar">Clean Architecture وفصل واضح للمسؤوليات، حتى تُضاف الميزات الجديدة دون كسر القائمة، ويُختبر منطق الأعمال بمعزل عن الواجهة.</span><span class="en">Clean Architecture and clear separation of concerns, so features ship without breaking existing ones and business logic is tested apart from the UI.</span></p></div>
+      <div class="s"><span class="k">State Management</span><h3><span class="ar">إدارة حالة متوقعة</span><span class="en">Predictable state</span></h3><p><span class="ar">Bloc/Cubit لتدفق بيانات أحادي الاتجاه، يسهّل تتبّع الأخطاء وكتابة الاختبارات.</span><span class="en">Bloc/Cubit for unidirectional data flow that is easy to debug and test.</span></p></div>
+      <div class="s"><span class="k">Backend · Laravel</span><h3><span class="ar">خدمات خلفية</span><span class="en">Backend services</span></h3><p><span class="ar">Laravel بنمط MVC، وطبقة تحقق من الطلبات، وواجهات RESTful بمصادقة وصلاحيات حسب الدور (RBAC).</span><span class="en">Laravel with MVC, request-validation layers, and RESTful APIs with authentication and RBAC.</span></p></div>
+      <div class="s"><span class="k">Data</span><h3><span class="ar">تصميم البيانات</span><span class="en">Data design</span></h3><p><span class="ar">تصميم مخططات PostgreSQL، والفهرسة، وتحسين الاستعلامات، وإدارة الترحيلات، مع MongoDB للبيانات ذات المخطط المرن.</span><span class="en">PostgreSQL schema design, indexing, query optimization and migrations, with MongoDB for flexible-schema data.</span></p></div>
+      <div class="s"><span class="k">Security</span><h3><span class="ar">الأمان</span><span class="en">Security</span></h3><p><span class="ar">تشفير البيانات، والتحقق من المدخلات على الخادم، ومراقبة أنماط المعاملات لاكتشاف الاحتيال.</span><span class="en">Data encryption, server-side input validation, and transaction-pattern monitoring to detect fraud.</span></p></div>
+      <div class="s"><span class="k">Delivery</span><h3><span class="ar">التسليم والنشر</span><span class="en">Delivery</span></h3><p><span class="ar">Git وPull Requests ومراجعة الكود، وCI/CD وDocker، وإدارة الإصدارات على App Store وGoogle Play.</span><span class="en">Git, pull requests and code review, CI/CD and Docker, and release management on both stores.</span></p></div>
+    </div>
+  </section>
+
+  <section class="band sec pad" id="path">
+    <h2 class="h-center reveal"><span class="ar">الخبرة العملية</span><span class="en">Experience</span></h2>
+    <div class="path">
+      <div class="job"><h3><span class="ar">عيادة سمارت كارب</span><span class="en">Smart Carb Clinic</span></h3><span class="r">Mobile Application Developer · <span class="ar">دوام جزئي</span><span class="en">Part-time</span></span><span class="d"><span class="now"></span><span class="ar">أكتوبر 2026 – الآن</span><span class="en">Oct 2026 – Present</span></span>
+        <ul>
+          <li><span class="ar">تطوير وصيانة تطبيق Flutter يخدم قرابة 10 آلاف مستخدم.</span><span class="en">Develop and maintain a Flutter app serving nearly 10,000 users.</span></li>
+          <li><span class="ar">بناء نظام حجز المواعيد (حضوري وعن بعد) ودمج بوابة الدفع.</span><span class="en">Built appointment booking (in-clinic and online) and payment gateway integration.</span></li>
+          <li><span class="ar">إصدارات دورية على App Store تشمل تحسين الأداء وإصلاح الأخطاء.</span><span class="en">Ship regular App Store releases with performance work and bug fixes.</span></li>
+        </ul></div>
+      <div class="job"><h3><span class="ar">تبيّن</span><span class="en">Tabayyun</span></h3><span class="r">Mobile Developer &amp; Digital Fraud Analyst</span><span class="d"><span class="now"></span><span class="ar">يونيو 2025 – الآن</span><span class="en">Jun 2025 – Present</span></span>
+        <ul>
+          <li><span class="ar">قيادة تطوير التطبيق (+20 ألف مستخدم) بـ Clean Architecture وBloc/Cubit.</span><span class="en">Lead development of the app (20,000+ users) with Clean Architecture and Bloc/Cubit.</span></li>
+          <li><span class="ar">تطوير خدمات Laravel، وتصميم قواعد PostgreSQL (فهرسة، تحسين استعلامات، ترحيلات) ونماذج MongoDB.</span><span class="en">Build Laravel services and design PostgreSQL schemas (indexing, query tuning, migrations) and MongoDB models.</span></li>
+          <li><span class="ar">بناء واجهات RESTful آمنة بـ RBAC وتشفير، وتحليل أنماط المعاملات لاكتشاف الاحتيال.</span><span class="en">Ship secure RESTful APIs with RBAC and encryption, and analyze transaction patterns to detect fraud.</span></li>
+        </ul></div>
+      <div class="job"><h3>Speero</h3><span class="r">Mobile Developer</span><span class="d"><span class="ar">ديسمبر 2024 – مايو 2025</span><span class="en">Dec 2024 – May 2025</span></span>
+        <ul>
+          <li><span class="ar">تطوير تطبيق Flutter للشركة وتوحيد مكونات الواجهة.</span><span class="en">Developed the company's Flutter app and unified UI components.</span></li>
+          <li><span class="ar">تنفيذ ميزات جديدة مع فريق متعدد التخصصات واختبارها قبل الإصدار.</span><span class="en">Delivered new features with a cross-functional team and tested them before release.</span></li>
+        </ul></div>
+      <div class="job"><h3>Bit LLC</h3><span class="r">Mobile Developer</span><span class="d"><span class="ar">يناير 2023 – أكتوبر 2024</span><span class="en">Jan 2023 – Oct 2024</span></span>
+        <ul>
+          <li><span class="ar">بناء تطبيقات متعددة المنصات بـ Flutter وFirebase.</span><span class="en">Built cross-platform apps with Flutter and Firebase.</span></li>
+          <li><span class="ar">العمل مع المصممين ومديري المنتج على دورة التطوير كاملة.</span><span class="en">Worked with designers and product managers across the full development cycle.</span></li>
+        </ul></div>
+    </div>
+  </section>
+
+  <section class="band sec pad" id="stack">
+    <h2 class="h-center reveal"><span class="ar">التقنيات</span><span class="en">Tech stack</span></h2>
+    <div class="stack-table">
+      <div class="row"><span class="lbl"><span class="ar">اللغات</span><span class="en">Languages</span></span><span class="val">Dart · PHP · Python · SQL</span></div>
+      <div class="row"><span class="lbl"><span class="ar">الجوال</span><span class="en">Mobile</span></span><span class="val">Flutter · Bloc/Cubit · Provider · Firebase · FCM · Google Maps · In-App Purchases</span></div>
+      <div class="row"><span class="lbl"><span class="ar">الخادم</span><span class="en">Backend</span></span><span class="val">Laravel · RESTful APIs · Auth &amp; RBAC · Payment Gateways · AI Integration</span></div>
+      <div class="row"><span class="lbl"><span class="ar">البيانات</span><span class="en">Data</span></span><span class="val">PostgreSQL · MongoDB · MySQL · SQL Server · Firestore</span></div>
+      <div class="row"><span class="lbl"><span class="ar">الأدوات</span><span class="en">Tooling</span></span><span class="val">Git · GitHub · Docker · CI/CD · Postman · Xcode · Android Studio</span></div>
+    </div>
+  </section>
+
+  <section class="band sec pad contact" id="contact">
+    <h2 class="reveal"><span class="ar"><span class="g">متاح لفرص هندسة البرمجيات</span><br>والمشاريع التقنية.</span><span class="en"><span class="g">Open to software engineering roles</span><br>and technical projects.</span></h2>
+    <p><span class="ar">للتواصل بخصوص وظيفة أو مشروع، راسلني على البريد أو عبر LinkedIn.</span><span class="en">For a role or a project, reach me by email or on LinkedIn.</span></p>
+    <a class="mail" href="mailto:zayedbinshamlan@gmail.com">zayedbinshamlan@gmail.com</a>
+    <div class="ctas">
+      <a class="btn dark" href="https://linkedin.com/in/zayed-shamlan-9841092a8" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn light" href="https://github.com/zayedbinshamlan" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn light" href="https://wa.me/966595322856" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </section>
+
+  <div class="band pad">
+    <footer>
+      <span class="ltr">© 2026 Zayed Bin Shamlan</span>
+      <nav><a href="#work"><span class="ar">المشاريع</span><span class="en">Projects</span></a><a href="#path"><span class="ar">الخبرة</span><span class="en">Experience</span></a><a href="#top"><span class="ar">العودة للأعلى</span><span class="en">Back to top</span></a></nav>
+    </footer>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <span>© 2025 Zayed Bin Shamlan</span>
-  <span style="color: var(--muted); font-size: 0.8rem;">Flutter Developer · Saudi Arabia 🇸🇦</span>
-</footer>
+</div>
+</main>
 
+<script>
+(function(){
+  var root=document.documentElement,menu=document.getElementById('menu'),mb=document.getElementById('menuBtn');
+  function setLang(l){
+    root.lang=l;root.dir=l==='ar'?'rtl':'ltr';root.classList.remove('l-ar','l-en');root.classList.add('l-'+l);
+    document.title=l==='ar'?'زايد بن شملان | مهندس برمجيات':'Zayed Bin Shamlan | Software Engineer';
+    try{localStorage.setItem('zb-lang',l)}catch(e){}
+  }
+  try{var s=localStorage.getItem('zb-lang');if(s==='en'||s==='ar')setLang(s)}catch(e){}
+  document.getElementById('lang').addEventListener('click',function(){setLang(root.lang==='ar'?'en':'ar')});
+  mb.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
+  document.addEventListener('click',function(){menu.classList.remove('open');mb.setAttribute('aria-expanded','false')});
+})();
+</script>
 </body>
 </html>
